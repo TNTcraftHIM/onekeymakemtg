@@ -1,7 +1,7 @@
 # 一键安装最新版 mtproxy-go 脚本   
 因为go版mtproxy代码更新了抗重放攻击等功能后，原作者没有直接放出编译好的程序，所以根据逗比原版一键脚本魔改，并且修复了Go编译错误的问题，直接拉取最新代码进行编译，**最新版已经支持 TLS 伪装**
    
-* 脚本说明: Mtproto Proxy Go版 一键编译安装管理脚本
+* 脚本说明: Mtproto Proxy Go版 一键编译安装管理脚本修复版
 * 系统支持: CentOS6+ / Debian7+ / Ubuntu14+
 * 使用参考: https://doubibackup.com/es5fj9se.html
 * 感谢 Gogogo 在 https://sunpma.com/776.html 下方留下的修改方法
