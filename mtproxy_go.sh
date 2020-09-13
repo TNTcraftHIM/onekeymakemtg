@@ -7,7 +7,6 @@ export PATH
 #	Description: MTProxy Golang
 #	Version: 2.0.2
 #	Author: Toyo && July
-#	Modifier: TNTcraftHIM && Gogogogo
 #=================================================
 
 sh_ver="2.0.2"
