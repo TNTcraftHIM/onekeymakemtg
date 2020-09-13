@@ -793,7 +793,7 @@ elif [[ "${action}" == "monitorip" ]]; then
 	crontab_monitorip
 else
 	echo && echo -e "  MTProxy-Go 一键管理脚本 ${Red_font_prefix}[v${sh_ver}]${Font_color_suffix}
-  ---- Toyo && July | doubibackup.com/es5fj9se.html ----
+  ---- Toyo && July && TNTcraftHIM | doubibackup.com/es5fj9se.html ----
   
  ${Green_font_prefix} 0.${Font_color_suffix} 升级脚本
 ————————————
