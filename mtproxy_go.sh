@@ -5,12 +5,12 @@ export PATH
 #=================================================
 #	System Required: CentOS/Debian/Ubuntu
 #	Description: MTProxy Golang
-#	Version: 2.0.0
+#	Version: 2.0.1
 #	Author: Toyo && July
 #	Modifier: TNTcraftHIM && Gogogogo
 #=================================================
 
-sh_ver="2.0.0"
+sh_ver="2.0.1"
 filepath=$(cd "$(dirname "$0")"; pwd)
 file_1=$(echo -e "${filepath}"|awk -F "$0" '{print $1}')
 file="/usr/local/mtproxy-go"
