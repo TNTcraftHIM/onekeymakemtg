@@ -108,3 +108,7 @@ nohup mtg run -b 0.0.0.0:443 --cloak-port=443 ee055a9b283c6ef2fbea89a374df31e796
 结束进程：`killall mtg`
 
 更多运行参数参见 [mtg 文档](https://github.com/9seconds/mtg#environment-variables)
+
+## 声明
+本项目所有内容仅供学习交流使用，不得用于任何商业用途。
+使用时请遵守当地相关法律法规，项目的Contributors不承担任何责任。
