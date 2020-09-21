@@ -6,7 +6,7 @@
 * 脚本说明: Mtproto Proxy Go版 一键编译安装管理脚本修复版
 * 系统支持: CentOS6+ / Debian7+ / Ubuntu14+
 * 使用参考: https://doubibackup.com/es5fj9se.html
-* 感谢 Gogogo 在 https://sunpma.com/776.html 下方评论区留下的修改方法
+* 感谢 Gogogo 在 https://sunpma.com/776.html 下方评论区留下的Go编译错误的修复方法
    
 下载安装:
 
