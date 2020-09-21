@@ -5,11 +5,11 @@ export PATH
 #=================================================
 #	System Required: CentOS/Debian/Ubuntu
 #	Description: MTProxy Golang
-#	Version: 2.0.4
+#	Version: 2.0.5
 #	Author: Toyo && July
 #=================================================
 
-sh_ver="2.0.4"
+sh_ver="2.0.5"
 filepath=$(cd "$(dirname "$0")"; pwd)
 file_1=$(echo -e "${filepath}"|awk -F "$0" '{print $1}')
 file="/usr/local/mtproxy-go"
@@ -292,7 +292,11 @@ Set_nat(){
 		is_nat_ipv4="YES"
 	fi
 	echo && echo "========================"
-	echo -e "	SET-IPv4 : ${Red_background_prefix} ${mtp_nat_ipv4} ${Font_color_suffix}"
+	if [[ "${is_nat_ipv4}" == "YES" ]]; then
+		echo -e "	NAT-IPv4 : ${Red_background_prefix} ${mtp_nat_ipv4} ${Font_color_suffix}"
+	else
+		echo -e "	    IPv4 : ${Red_background_prefix} ${mtp_nat_ipv4} ${Font_color_suffix}"
+	fi
 	echo "========================" && echo
 	echo -e "如果本机是NAT服务器（谷歌云、微软云、阿里云等），则需要指定公网 IPv6。"
 	read -e -p "(默认：自动检测 IPv6 地址):" mtp_nat_ipv6
@@ -307,7 +311,11 @@ Set_nat(){
 		is_nat_ipv6="YES"
 	fi
 	echo && echo "========================"
-	echo -e "	SET-IPv6 : ${Red_background_prefix} ${mtp_nat_ipv6} ${Font_color_suffix}"
+	if [[ "${is_nat_ipv6}" == "YES" ]]; then
+		echo -e "	NAT-IPv6 : ${Red_background_prefix} ${mtp_nat_ipv6} ${Font_color_suffix}"
+	else
+		echo -e "	    IPv6 : ${Red_background_prefix} ${mtp_nat_ipv6} ${Font_color_suffix}"
+	fi
 	echo "========================" && echo
 }
 Set_secure(){
@@ -495,41 +503,21 @@ Uninstall(){
 		echo && echo "卸载已取消..." && echo
 	fi
 }
-getipv4(){
-	ipv4=$(wget -qO- -4 -t1 -T2 ipinfo.io/ip)
-	if [[ -z "${ipv4}" ]]; then
-		ipv4=$(wget -qO- -4 -t1 -T2 api.ip.sb/ip)
-		if [[ -z "${ipv4}" ]]; then
-			ipv4=$(wget -qO- -4 -t1 -T2 members.3322.org/dyndns/getip)
-			if [[ -z "${ipv4}" ]]; then
-				ipv4="IPv4_Error"
-			fi
-		fi
-	fi
-}
-getipv6(){
-	ipv6=$(wget -qO- -6 -t1 -T3 ifconfig.co)
-	if [[ -z "${ipv6}" ]]; then
-		ipv6="IPv6_Error"
-	fi
-}
 View(){
 	check_installed_status
 	Read_config
 	if [["${is_nat_ipv4}" == "YES"]]; then
 		getipv4
 		if [[ "${ipv4}" == "IPv4_Error" ]]; then
-			mtp_nat_ipv4=""
 		else
-			mtp_nat_ipv4="${ipv4}"
+			nat_ipv4="${ipv4}"
 		fi
 	fi
 	if [["${is_nat_ipv6}" == "YES"]]; then
 		getipv6
 		if [[ "${ipv6}" == "IPv6_Error" ]]; then
-			mtp_nat_ipv6=""
 		else
-			mtp_nat_ipv6="${ipv6}"
+			nat_ipv6="${ipv6}"
 		fi
 	fi
 	if [[ "${secure}" == "YES" && "${fake_tls}" == "NO" ]]; then
@@ -880,3 +868,21 @@ else
 		;;
 	esac
 fi
+getipv4(){
+	ipv4=$(wget -qO- -4 -t1 -T2 ipinfo.io/ip)
+	if [[ -z "${ipv4}" ]]; then
+		ipv4=$(wget -qO- -4 -t1 -T2 api.ip.sb/ip)
+		if [[ -z "${ipv4}" ]]; then
+			ipv4=$(wget -qO- -4 -t1 -T2 members.3322.org/dyndns/getip)
+			if [[ -z "${ipv4}" ]]; then
+				ipv4="IPv4_Error"
+			fi
+		fi
+	fi
+}
+getipv6(){
+	ipv6=$(wget -qO- -6 -t1 -T3 ifconfig.co)
+	if [[ -z "${ipv6}" ]]; then
+		ipv6="IPv6_Error"
+	fi
+}
