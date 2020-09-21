@@ -509,6 +509,7 @@ View(){
 	if [["${is_nat_ipv4}" == "YES"]]; then
 		getipv4
 		if [[ "${ipv4}" == "IPv4_Error" ]]; then
+			:
 		else
 			nat_ipv4="${ipv4}"
 		fi
@@ -516,6 +517,7 @@ View(){
 	if [["${is_nat_ipv6}" == "YES"]]; then
 		getipv6
 		if [[ "${ipv6}" == "IPv6_Error" ]]; then
+			:
 		else
 			nat_ipv6="${ipv6}"
 		fi
