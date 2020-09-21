@@ -5,11 +5,11 @@ export PATH
 #=================================================
 #	System Required: CentOS/Debian/Ubuntu
 #	Description: MTProxy Golang
-#	Version: 2.0.8
+#	Version: 2.0.9
 #	Author: Toyo && July
 #=================================================
 
-sh_ver="2.0.8"
+sh_ver="2.0.9"
 filepath=$(cd "$(dirname "$0")"; pwd)
 file_1=$(echo -e "${filepath}"|awk -F "$0" '{print $1}')
 file="/usr/local/mtproxy-go"
@@ -23,6 +23,25 @@ Green_font_prefix="\033[32m" && Red_font_prefix="\033[31m" && Green_background_p
 Info="${Green_font_prefix}[信息]${Font_color_suffix}"
 Error="${Red_font_prefix}[错误]${Font_color_suffix}"
 Tip="${Green_font_prefix}[注意]${Font_color_suffix}"
+
+getipv4(){
+	ipv4=$(wget -qO- -4 -t1 -T2 ipinfo.io/ip)
+	if [[ -z "${ipv4}" ]]; then
+		ipv4=$(wget -qO- -4 -t1 -T2 api.ip.sb/ip)
+		if [[ -z "${ipv4}" ]]; then
+			ipv4=$(wget -qO- -4 -t1 -T2 members.3322.org/dyndns/getip)
+			if [[ -z "${ipv4}" ]]; then
+				ipv4="IPv4_Error"
+			fi
+		fi
+	fi
+}
+getipv6(){
+	ipv6=$(wget -qO- -6 -t1 -T3 ifconfig.co)
+	if [[ -z "${ipv6}" ]]; then
+		ipv6="IPv6_Error"
+	fi
+}
 
 check_root(){
 	[[ $EUID != 0 ]] && echo -e "${Error} 当前非ROOT账号(或没有ROOT权限)，无法继续操作，请更换ROOT账号或使用 ${Green_background_prefix}sudo su${Font_color_suffix} 命令获取临时ROOT权限（执行后可能会提示输入当前账号的密码）。" && exit 1
@@ -852,21 +871,3 @@ else
 		;;
 	esac
 fi
-getipv4(){
-	ipv4=$(wget -qO- -4 -t1 -T2 ipinfo.io/ip)
-	if [[ -z "${ipv4}" ]]; then
-		ipv4=$(wget -qO- -4 -t1 -T2 api.ip.sb/ip)
-		if [[ -z "${ipv4}" ]]; then
-			ipv4=$(wget -qO- -4 -t1 -T2 members.3322.org/dyndns/getip)
-			if [[ -z "${ipv4}" ]]; then
-				ipv4="IPv4_Error"
-			fi
-		fi
-	fi
-}
-getipv6(){
-	ipv6=$(wget -qO- -6 -t1 -T3 ifconfig.co)
-	if [[ -z "${ipv6}" ]]; then
-		ipv6="IPv6_Error"
-	fi
-}
