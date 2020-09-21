@@ -5,11 +5,11 @@ export PATH
 #=================================================
 #	System Required: CentOS/Debian/Ubuntu
 #	Description: MTProxy Golang
-#	Version: 2.0.7
+#	Version: 2.0.8
 #	Author: Toyo && July
 #=================================================
 
-sh_ver="2.0.7"
+sh_ver="2.0.8"
 filepath=$(cd "$(dirname "$0")"; pwd)
 file_1=$(echo -e "${filepath}"|awk -F "$0" '{print $1}')
 file="/usr/local/mtproxy-go"
@@ -18,8 +18,6 @@ mtproxy_conf="/usr/local/mtproxy-go/mtproxy.conf"
 mtproxy_log="/usr/local/mtproxy-go/mtproxy.log"
 Now_ver_File="/usr/local/mtproxy-go/ver.txt"
 Crontab_file="/usr/bin/crontab"
-is_nat_ipv4="NO"
-is_nat_ipv6="NO"
 
 Green_font_prefix="\033[32m" && Red_font_prefix="\033[31m" && Green_background_prefix="\033[42;37m" && Red_background_prefix="\033[41;37m" && Font_color_suffix="\033[0m"
 Info="${Green_font_prefix}[信息]${Font_color_suffix}"
@@ -288,15 +286,9 @@ Set_nat(){
 		else
 			mtp_nat_ipv4="${ipv4}"
 		fi
-	else
-		is_nat_ipv4="YES"
 	fi
 	echo && echo "========================"
-	if [[ "${is_nat_ipv4}" == "YES" ]]; then
-		echo -e "	NAT-IPv4 : ${Red_background_prefix} ${mtp_nat_ipv4} ${Font_color_suffix}"
-	else
-		echo -e "	    IPv4 : ${Red_background_prefix} ${mtp_nat_ipv4} ${Font_color_suffix}"
-	fi
+	echo -e "	NAT-IPv4 : ${Red_background_prefix} ${mtp_nat_ipv4} ${Font_color_suffix}"
 	echo "========================" && echo
 	echo -e "如果本机是NAT服务器（谷歌云、微软云、阿里云等），则需要指定公网 IPv6。"
 	read -e -p "(默认：自动检测 IPv6 地址):" mtp_nat_ipv6
@@ -307,15 +299,9 @@ Set_nat(){
 		else
 			mtp_nat_ipv6="${ipv6}"
 		fi
-	else
-		is_nat_ipv6="YES"
 	fi
 	echo && echo "========================"
-	if [[ "${is_nat_ipv6}" == "YES" ]]; then
-		echo -e "	NAT-IPv6 : ${Red_background_prefix} ${mtp_nat_ipv6} ${Font_color_suffix}"
-	else
-		echo -e "	    IPv6 : ${Red_background_prefix} ${mtp_nat_ipv6} ${Font_color_suffix}"
-	fi
+	echo -e "	NAT-IPv6 : ${Red_background_prefix} ${mtp_nat_ipv6} ${Font_color_suffix}"
 	echo "========================" && echo
 }
 Set_secure(){
@@ -506,21 +492,17 @@ Uninstall(){
 View(){
 	check_installed_status
 	Read_config
-	if [["${is_nat_ipv4}" == "YES"]]; then
-		getipv4
-		if [[ "${ipv4}" == "IPv4_Error" ]]; then
-			nat_ipv4="${nat_ipv4}"
-		else
-			nat_ipv4="${ipv4}"
-		fi
+	getipv4
+	if [[ "${ipv4}" == "IPv4_Error" ]]; then
+		nat_ipv4="${nat_ipv4}"
+	else
+		nat_ipv4="${ipv4}"
 	fi
-	if [["${is_nat_ipv6}" == "YES"]]; then
-		getipv6
-		if [[ "${ipv6}" == "IPv6_Error" ]]; then
-			nat_ipv6="${nat_ipv6}"
-		else
-			nat_ipv6="${ipv6}"
-		fi
+	getipv6
+	if [[ "${ipv6}" == "IPv6_Error" ]]; then
+		nat_ipv6="${nat_ipv6}"
+	else
+		nat_ipv6="${ipv6}"
 	fi
 	if [[ "${secure}" == "YES" && "${fake_tls}" == "NO" ]]; then
 		passwd="dd${passwd}"
