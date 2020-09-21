@@ -5,11 +5,11 @@ export PATH
 #=================================================
 #	System Required: CentOS/Debian/Ubuntu
 #	Description: MTProxy Golang
-#	Version: 2.0.6
+#	Version: 2.0.7
 #	Author: Toyo && July
 #=================================================
 
-sh_ver="2.0.6"
+sh_ver="2.0.7"
 filepath=$(cd "$(dirname "$0")"; pwd)
 file_1=$(echo -e "${filepath}"|awk -F "$0" '{print $1}')
 file="/usr/local/mtproxy-go"
@@ -509,7 +509,7 @@ View(){
 	if [["${is_nat_ipv4}" == "YES"]]; then
 		getipv4
 		if [[ "${ipv4}" == "IPv4_Error" ]]; then
-			:
+			nat_ipv4="${nat_ipv4}"
 		else
 			nat_ipv4="${ipv4}"
 		fi
@@ -517,7 +517,7 @@ View(){
 	if [["${is_nat_ipv6}" == "YES"]]; then
 		getipv6
 		if [[ "${ipv6}" == "IPv6_Error" ]]; then
-			:
+			nat_ipv6="${nat_ipv6}"
 		else
 			nat_ipv6="${ipv6}"
 		fi
