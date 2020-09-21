@@ -5,11 +5,11 @@ export PATH
 #=================================================
 #	System Required: CentOS/Debian/Ubuntu
 #	Description: MTProxy Golang
-#	Version: 2.0.3
+#	Version: 2.0.4
 #	Author: Toyo && July
 #=================================================
 
-sh_ver="2.0.3"
+sh_ver="2.0.4"
 filepath=$(cd "$(dirname "$0")"; pwd)
 file_1=$(echo -e "${filepath}"|awk -F "$0" '{print $1}')
 file="/usr/local/mtproxy-go"
@@ -288,12 +288,12 @@ Set_nat(){
 		else
 			mtp_nat_ipv4="${ipv4}"
 		fi
-		echo && echo "========================"
-		echo -e "	NAT-IPv4 : ${Red_background_prefix} ${mtp_nat_ipv4} ${Font_color_suffix}"
-		echo "========================" && echo
 	else
 		is_nat_ipv4="YES"
 	fi
+	echo && echo "========================"
+	echo -e "	SET-IPv4 : ${Red_background_prefix} ${mtp_nat_ipv4} ${Font_color_suffix}"
+	echo "========================" && echo
 	echo -e "如果本机是NAT服务器（谷歌云、微软云、阿里云等），则需要指定公网 IPv6。"
 	read -e -p "(默认：自动检测 IPv6 地址):" mtp_nat_ipv6
 	if [[ -z "${mtp_nat_ipv6}" ]]; then
@@ -303,12 +303,12 @@ Set_nat(){
 		else
 			mtp_nat_ipv6="${ipv6}"
 		fi
-		echo && echo "========================"
-		echo -e "	NAT-IPv6 : ${Red_background_prefix} ${mtp_nat_ipv6} ${Font_color_suffix}"
-		echo "========================" && echo
 	else
 		is_nat_ipv6="YES"
 	fi
+	echo && echo "========================"
+	echo -e "	SET-IPv6 : ${Red_background_prefix} ${mtp_nat_ipv6} ${Font_color_suffix}"
+	echo "========================" && echo
 }
 Set_secure(){
 	echo -e "是否启用强制安全模式？[Y/n]
@@ -518,9 +518,19 @@ View(){
 	Read_config
 	if [["${is_nat_ipv4}" == "YES"]]; then
 		getipv4
+		if [[ "${ipv4}" == "IPv4_Error" ]]; then
+			mtp_nat_ipv4=""
+		else
+			mtp_nat_ipv4="${ipv4}"
+		fi
 	fi
 	if [["${is_nat_ipv6}" == "YES"]]; then
 		getipv6
+		if [[ "${ipv6}" == "IPv6_Error" ]]; then
+			mtp_nat_ipv6=""
+		else
+			mtp_nat_ipv6="${ipv6}"
+		fi
 	fi
 	if [[ "${secure}" == "YES" && "${fake_tls}" == "NO" ]]; then
 		passwd="dd${passwd}"
